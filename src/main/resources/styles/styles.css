@@ -1,0 +1,52 @@
+/* Application wide styles */
+
+.label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+  -fx-text-fill: #f1c40f;
+
+}
+
+.button {
+    -fx-text-fill: ##2c3e50;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #f1c40f;
+
+}
+VBox {
+    -fx-padding: 60 0 0 0;
+
+}
+
+.root {
+
+             -fx-background-color: #2c3e50;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+ -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.list-cell:even {
+ -fx-font-weight: bold;
+}
+.list-cell {
+ -fx-font-weight: bold;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+     -fx-font-weight: bold;
+}
+TextField{
+ -fx-font-size: 12px;
+    -fx-font-weight: bold;
+-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);
+
+}
+
+
+

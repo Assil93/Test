@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="tableColumName" editable="false" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="tableColumDate" prefWidth="132.0" text="Date" />
+            <TableColumn fx:id="tableColumTarget" editable="false" prefWidth="107.0" text="Target" />
+            <TableColumn fx:id="tableColumActual" prefWidth="123.0" text="Actual" />
+            <TableColumn fx:id="tableColumVariance" prefWidth="122.0" text="Variance" />
+        </columns>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TableView>
+   </center>
+   <bottom>
+      <Button fx:id="changeViewBtn" mnemonicParsing="false" text="Change View" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <top>
+      <ChoiceBox fx:id="choiceBox" prefWidth="150.0" BorderPane.alignment="CENTER_RIGHT">
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </ChoiceBox>
+   </top>
+</BorderPane>
