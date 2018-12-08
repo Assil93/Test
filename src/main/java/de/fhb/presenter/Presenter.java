@@ -17,6 +17,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import org.apache.commons.lang.ObjectUtils.Null;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ public class Presenter extends Application implements ViewListener, StationListe
     private static Presenter sInstance;
     private IStationBo stationBo;
     private static AMonitorView monitorView;
+    private static AMonitorView monitorView1;
     private Stage primaryStage;
     private int viewNumber = 1;
 
@@ -95,26 +98,31 @@ public class Presenter extends Application implements ViewListener, StationListe
 
             viewNumber = 1;
             // Liste der Stationen aktualisieren.
-            monitorView.updateStationList(stationBo.findAll());
+
+           monitorView.updateStationList(stationBo.findAll());
+           
+           
+            
         } else if (viewNumber == 1) {
             // .fxml Datei der View.
             String fxmlFile = "/fxml/monitorInsertDataView.fxml";
             log.debug(String.format("Loading FXML for MonitorInsertDataView from: %s", fxmlFile));
             FXMLLoader loader = new FXMLLoader();
-            monitorView = new MonitorInsertDataView(this);
-            loader.setController(monitorView);
+            Stage secondStage = new Stage();
+            monitorView1 = new MonitorInsertDataView(this);
+            loader.setController(monitorView1);
             Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
-
+          
             log.debug("Showing MonitorInsertDataView");
             Scene scene = new Scene(rootNode, 900, 650);
             scene.getStylesheets().add("/styles/styles.css");
-            this.primaryStage.setTitle("ICE APP");
-            this.primaryStage.setScene(scene);
-            this.primaryStage.show();
+            primaryStage.setTitle("ICE APP");
+            primaryStage.setScene(scene);
+            primaryStage.show();
 
             viewNumber = 0;
             // Liste der Stationen aktualisieren.
-            monitorView.updateStationList(stationBo.findAll());
+            monitorView1.updateStationList(stationBo.findAll());
             // EventHandler für das Beenden der Anwendung setzen.
             primaryStage.setOnCloseRequest(event -> {
                 if (event.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
@@ -164,6 +172,7 @@ public class Presenter extends Application implements ViewListener, StationListe
         Platform.runLater(() -> {
             // View updaten
             monitorView.updateStationList(stationBo.findAll());
+            monitorView1.updateStationList(stationBo.findAll());
             // Notification anzeigen
             Notification.Notifier.INSTANCE.notifyInfo("Info", "New Station added");
             // View wieder in der Vordergrund, nachdem die Notification gezeigt wurde.
