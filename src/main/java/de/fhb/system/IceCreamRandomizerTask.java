@@ -13,7 +13,7 @@ import java.util.TimerTask;
 
 /**
  * Simuliert das System. Hier werden alle 10-15 Sekunden eine neue Staion hinzugefügt.
- * Created by Tobias Bartz on 01.12.2015.
+ 
  */
 public class IceCreamRandomizerTask extends TimerTask implements StationListener {
 

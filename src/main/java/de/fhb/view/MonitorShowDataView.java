@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Created by Tobi on 30.11.2015.
+
  */
 public class MonitorShowDataView extends AMonitorView implements Initializable {
 

@@ -29,8 +29,7 @@ import java.util.ResourceBundle;
 
 /**
  * JavaFX Klasse zum Anzeigen der InsertDataView.
- * <p>
- * Created on 23.11.2015.
+
  */
 public class MonitorInsertDataView extends AMonitorView {
 
