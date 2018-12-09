@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-public class StationVo implements Serializable {
+public class StationCSG implements Serializable {
 
     private static Long nextId = 0L;
     private Long id;
@@ -18,7 +18,7 @@ public class StationVo implements Serializable {
 
 
 
-    public StationVo(String name, Integer targetValue, Integer actualValue, Integer variance, Date date) {
+    public StationCSG(String name, Integer targetValue, Integer actualValue, Integer variance, Date date) {
         this(name, targetValue);
         this.actualValue = actualValue;
         this.variance = variance;
@@ -32,7 +32,7 @@ public class StationVo implements Serializable {
 
     }
 
-    public StationVo(String name, Integer targetValue) {
+    public StationCSG(String name, Integer targetValue) {
         this.id = nextId;
         this.name = name;
         this.targetValue = targetValue;

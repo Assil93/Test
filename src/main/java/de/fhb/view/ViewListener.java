@@ -1,6 +1,6 @@
 package de.fhb.view;
 
-import de.fhb.model.StationVo;
+import de.fhb.model.StationCSG;
 
 /**
  * Interface zum Erkennen von Änderungen über die View, wie Wechsel der View oder ändern der Daten durch den Benutzer über die View.
@@ -8,6 +8,6 @@ import de.fhb.model.StationVo;
 public interface ViewListener {
 
     void onViewChangeClicked();
-
-    void onDataChanged(StationVo station);
+    String  setVarianceColor(int target, int actual);
+    void onDataChanged(StationCSG station);
 }

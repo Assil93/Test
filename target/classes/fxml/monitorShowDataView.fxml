@@ -35,11 +35,5 @@
          </BorderPane.margin>
       </Button>
    </bottom>
-   <top>
-      <ChoiceBox fx:id="choiceBox" prefWidth="150.0" BorderPane.alignment="CENTER_RIGHT">
-         <BorderPane.margin>
-            <Insets left="20.0" right="20.0" top="20.0" />
-         </BorderPane.margin>
-      </ChoiceBox>
-   </top>
+   
 </BorderPane>

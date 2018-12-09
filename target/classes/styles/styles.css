@@ -45,6 +45,7 @@ TextField{
  -fx-font-size: 12px;
     -fx-font-weight: bold;
 -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0), 0, 0, 0, 0);
+ -fx-text-alignment: justify;
 
 }
 

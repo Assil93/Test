@@ -1,7 +1,7 @@
 package de.fhb.system;
 
-import de.fhb.model.IStationBo;
-import de.fhb.model.StationBo;
+import de.fhb.model.IStation;
+import de.fhb.model.Station;
 import de.fhb.model.StationListener;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
@@ -19,14 +19,14 @@ public class IceCreamRandomizerTask extends TimerTask implements StationListener
 
     private static Timer timer = new Timer();
     private static boolean shouldRun = true;
-    private static IStationBo stationBo;
+    private static IStation station;
     private static IceCreamRandomizerTask sInstance;
 
     private static final Logger log = LoggerFactory.getLogger(IceCreamRandomizerTask.class);
 
     public IceCreamRandomizerTask() {
         sInstance = this;
-        stationBo = StationBo.getInstance(this);
+        station = Station.getInstance(this);
     }
 
     public static void stop() {
@@ -44,7 +44,7 @@ public class IceCreamRandomizerTask extends TimerTask implements StationListener
         // Zufälligen target value erstellen.
         int randomNum = rand.nextInt((75 - 25) + 1) + 25;
         // Speichern der neuen Station.
-        stationBo.addStation(name, randomNum);
+        station.addStation(name, randomNum);
         log.debug("Created Station: " + name);
         if (shouldRun) {
             // Nach 10-15 Sekunden den Task nochmal ausführen.

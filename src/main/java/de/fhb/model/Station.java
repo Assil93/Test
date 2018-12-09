@@ -5,21 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Business Object für den Zugriff auf das StationVo.
+ * Business Object für den Zugriff auf das StationCSG.
  * Bei der Klasse handelt es sich um einen Singleton.
  * Initialisieren der Klasse über die getInstance() Methode.
  */
-public class StationBo implements IStationBo {
+public class Station implements IStation {
 
     /**
      * Statische Liste aller Stationen.
      */
-    private static List<StationVo> stationList = new ArrayList<>();
+    private static List<StationCSG> stationList = new ArrayList<>();
     /**
      * Statische Liste aller Listener.
      */
     private static List<StationListener> listeners = new ArrayList<>();
-    private static StationBo sInstance;
+    private static Station sInstance;
 
     /**
      * Gibt die Instanz dieser Klasse zurück. Falls noch keine vorhanden, wird diese erstellt.
@@ -27,16 +27,16 @@ public class StationBo implements IStationBo {
      * @param obj Klasse, die den StationListener implementiert.
      * @return Instanz der Klasse.
      */
-    public static StationBo getInstance(Object obj) {
+    public static Station getInstance(Object obj) {
         if (sInstance == null) {
-            sInstance = new StationBo(obj);
+            sInstance = new Station(obj);
         } else {
             sInstance.onAttach(obj);
         }
         return sInstance;
     }
 
-    private StationBo(Object obj) {
+    private Station(Object obj) {
         onAttach(obj);
     }
 
@@ -53,12 +53,12 @@ public class StationBo implements IStationBo {
     }
 
     /**
-     * Methode zum Finden aller StationVo.
+     * Methode zum Finden aller StationCSG.
      *
      * @return Liste aller Stationen.
      */
     @Override
-    public List<StationVo> findAll() {
+    public List<StationCSG> SelectStations() {
         return stationList;
     }
 
@@ -69,12 +69,12 @@ public class StationBo implements IStationBo {
      * @return Die Station oder <code>null</code> falls Station nicht existiert.
      */
     @Override
-    public StationVo findStationById(Long id) {
-        StationVo returnStation = null;
+    public StationCSG SelectStationById(Long id) {
+        StationCSG returnStation = null;
         boolean stationFound = false;
         int i = 0;
         while (!stationFound && stationList.size() > i) {
-            StationVo station = stationList.get(i);
+            StationCSG station = stationList.get(i);
             if (id == station.getId()) {
                 returnStation = station;
                 stationFound = true;
@@ -91,8 +91,8 @@ public class StationBo implements IStationBo {
      * @param date Das neue Datum.
      */
     @Override
-    public void updateStationDate(Long id, Date date) {
-        StationVo updateStation = findStationById(id);
+    public void updateDate(Long id, Date date) {
+        StationCSG updateStation = SelectStationById(id);
         updateStation.setDate(date);
 
     }
@@ -104,8 +104,8 @@ public class StationBo implements IStationBo {
      * @param actualValue Der neue Wert.
      */
     @Override
-    public void updateStationValue(Long id, Integer actualValue) {
-        StationVo updateStation = findStationById(id);
+    public void updateActual(Long id, Integer actualValue) {
+        StationCSG updateStation = SelectStationById(id);
         updateStation.setActualValue(actualValue);
         updateStation.setVariance(updateStation.getActualValue() - updateStation.getTargetValue());
         notifyListeners2();
@@ -118,8 +118,8 @@ public class StationBo implements IStationBo {
      * @param name Der neue Name.
      */
     @Override
-    public void updateStationName(Long id, String name) {
-        StationVo updateStation = findStationById(id);
+    public void updateName(Long id, String name) {
+        StationCSG updateStation = SelectStationById(id);
         updateStation.setName(name);
 
     }
@@ -132,7 +132,7 @@ public class StationBo implements IStationBo {
      */
     @Override
     public void addStation(String name, Integer targetValue) {
-        stationList.add(new StationVo(name, targetValue));
+        stationList.add(new StationCSG(name, targetValue));
         notifyListeners();
     }
 

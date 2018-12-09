@@ -1,6 +1,6 @@
 package de.fhb.view;
 
-import de.fhb.model.StationVo;
+import de.fhb.model.StationCSG;
 import de.fhb.presenter.Presenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,7 +36,7 @@ public class MonitorInsertDataView extends AMonitorView {
 
     // JavaFX Elemente
     @FXML
-    private ListView<StationVo> stationListView;
+    private ListView<StationCSG> stationListView;
     @FXML
     private TextField stationIDTextField;
     @FXML
@@ -51,7 +51,7 @@ public class MonitorInsertDataView extends AMonitorView {
     private Button changeViewBtn;
     @FXML
     private Button saveBtn;
-
+    
     // Logger
     private static final Logger log = LoggerFactory.getLogger(MonitorInsertDataView.class);
 
@@ -61,12 +61,13 @@ public class MonitorInsertDataView extends AMonitorView {
      * @see Initializable
      */
     public void initialize(URL location, ResourceBundle resources) {
+      
 
 
         // Listener für ListView
-        stationListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StationVo>() {
+        stationListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StationCSG>() {
             @Override
-            public void changed(ObservableValue<? extends StationVo> observable, StationVo oldValue, StationVo newValue) {
+            public void changed(ObservableValue<? extends StationCSG> observable, StationCSG oldValue, StationCSG newValue) {
                 if (newValue != null) {
 
                     // falls der Fokus nicht auf dem Feld ist und eine neue
@@ -99,18 +100,16 @@ public class MonitorInsertDataView extends AMonitorView {
                     }
 
                     // falls Varianz vorhanden diese anzeigen
-                    if (newValue.getVariance() != null) {
+                   
+                        
+                      if (newValue.getVariance() != null){
                         varianceTextField.setText(String.valueOf(newValue.getVariance()));
-                        if (newValue.getActualValue() * 100 / newValue.getTargetValue() <= 90) {
-                            varianceTextField.setStyle("-fx-text-fill: red;"); // 10% unter target
-                        } else if (newValue.getActualValue() * 100 / newValue.getTargetValue() >= 105) {
-                            varianceTextField.setStyle("-fx-text-fill: green;"); // 5% über target
-                        } else {
-                            varianceTextField.setStyle("-fx-text-fill: black;"); // standard
-                        }
-                    } else {
-                        varianceTextField.setText("");
+                       varianceTextField.setStyle(listener.setVarianceColor(newValue.getTargetValue(),newValue.getActualValue())); // 10% unter target
                     }
+                else {
+                    varianceTextField.setText("");
+                }
+                
 
                     // handle OnKeyReleased Event für Datums TextField
                     dateTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -258,13 +257,13 @@ public class MonitorInsertDataView extends AMonitorView {
     /**
      * Aktualisiert die ListView. Wird vom Presenter aufgerufen.
      *
-     * @param list Liste von StationVo Objekten, die in der View angezeigt werden sollen
+     * @param list Liste von StationCSG Objekten, die in der View angezeigt werden sollen
      * @see Presenter#onStationChanged()
      */
 
-    public void updateStationList(List<StationVo> list) {
+    public void updateStationList(List<StationCSG> list) {
         log.debug("Updating ListView");
-        ObservableList<StationVo> observableList = FXCollections.observableArrayList(list);
+        ObservableList<StationCSG> observableList = FXCollections.observableArrayList(list);
         stationListView.setItems(observableList);
     }
 

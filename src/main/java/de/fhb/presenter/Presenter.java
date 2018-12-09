@@ -1,9 +1,9 @@
 package de.fhb.presenter;
 
-import de.fhb.model.IStationBo;
-import de.fhb.model.StationBo;
+import de.fhb.model.IStation;
+import de.fhb.model.Station;
 import de.fhb.model.StationListener;
-import de.fhb.model.StationVo;
+import de.fhb.model.StationCSG;
 import de.fhb.system.IceCreamRandomizerTask;
 import de.fhb.view.AMonitorView;
 import de.fhb.view.MonitorInsertDataView;
@@ -31,7 +31,9 @@ public class Presenter extends Application implements ViewListener, StationListe
     private static final Logger log = LoggerFactory.getLogger(Presenter.class);
 
     private static Presenter sInstance;
-    private IStationBo stationBo;
+    private IStation station;
+    private IStation station1;
+    private StationCSG stationCSG;
     private static AMonitorView monitorView;
     private static AMonitorView monitorView1;
     private Stage primaryStage;
@@ -41,12 +43,13 @@ public class Presenter extends Application implements ViewListener, StationListe
      * Defaultkonstruktor. Dieser wird bei initialisieren der Anwendung durch JavaFX aufgerufen.
      */
     public Presenter() {
-        this.stationBo = StationBo.getInstance(this);
+        this.station = Station.getInstance(this);
+        this.station1 = this.station;
     }
 
     private Presenter(String[] args) {
         super();
-        //this.stationBo = StationBo.getInstance(this);
+        //this.Station = Station.getInstance(this);
         launch(args);
     }
 
@@ -91,7 +94,7 @@ public class Presenter extends Application implements ViewListener, StationListe
 
             log.debug("Showing MonitorShowDataView");
             Scene scene = new Scene(rootNode, 900, 650);
-            scene.getStylesheets().add("/styles/styles.css");
+            scene.getStylesheets().add("/styles/styles1.css");
             secondStage.setTitle("ICE APP");
             secondStage.setScene(scene);
             secondStage.show();
@@ -99,7 +102,7 @@ public class Presenter extends Application implements ViewListener, StationListe
             viewNumber = 1;
             // Liste der Stationen aktualisieren.
 
-           monitorView.updateStationList(stationBo.findAll());
+           monitorView.updateStationList(station.SelectStations());
            
            
             
@@ -119,10 +122,10 @@ public class Presenter extends Application implements ViewListener, StationListe
             primaryStage.setTitle("ICE APP");
             primaryStage.setScene(scene);
             primaryStage.show();
-
+             
             viewNumber = 0;
             // Liste der Stationen aktualisieren.
-            monitorView1.updateStationList(stationBo.findAll());
+            monitorView1.updateStationList(station.SelectStations());
             // EventHandler für das Beenden der Anwendung setzen.
             primaryStage.setOnCloseRequest(event -> {
                 if (event.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
@@ -151,18 +154,19 @@ public class Presenter extends Application implements ViewListener, StationListe
     }
 
     @Override
-    public void onDataChanged(StationVo station) {
+    public void onDataChanged(StationCSG stationcsg) {
         // Prüfen welche Daten geändert wurden und die Station updaten.
-        if (station.getDate() != null) {
-            stationBo.updateStationDate(station.getId(), station.getDate());
+        if (stationcsg.getDate() != null) {
+            station.updateDate(stationcsg.getId(), stationcsg.getDate());
         }
-        if (station.getActualValue() != null) {
-            stationBo.updateStationValue(station.getId(), station.getActualValue());
+        if (stationcsg.getActualValue() != null) {
+            station.updateActual(stationcsg.getId(), stationcsg.getActualValue());
         }
-        if (station.getName() != null) {
-            stationBo.updateStationName(station.getId(), station.getName());
+        if (stationcsg.getName() != null) {
+            station.updateName(stationcsg.getId(), stationcsg.getName());
         }
-        monitorView.updateStationList(stationBo.findAll());
+        monitorView.updateStationList(station.SelectStations());
+        monitorView1.updateStationList(station.SelectStations());
     }
 
     // Methoden für StationListener
@@ -171,20 +175,33 @@ public class Presenter extends Application implements ViewListener, StationListe
         log.debug("Daten geändert.");
         Platform.runLater(() -> {
             // View updaten
-            monitorView.updateStationList(stationBo.findAll());
-            monitorView1.updateStationList(stationBo.findAll());
+            monitorView.updateStationList(station.SelectStations());
+            monitorView1.updateStationList(station.SelectStations());
             // Notification anzeigen
             Notification.Notifier.INSTANCE.notifyInfo("Info", "New Station added");
             // View wieder in der Vordergrund, nachdem die Notification gezeigt wurde.
             primaryStage.toFront();
         });
     }
+   public String  setVarianceColor(int target, int actual){
+    
+        if (actual* 100 /target <= 90) {
+          return  "-fx-text-fill: red;";
+        } else if (actual * 100 / target >= 105) {
+           return "-fx-text-fill: green;" ;// 5% über target
+        } else {
+           return "-fx-text-fill: black;"; // standard
+        }
+    } 
+   
 
+   
     public void onStationChanged2() {
         log.debug("Daten geändert.");
         Platform.runLater(() -> {
             // View updaten
-            monitorView.updateStationList(stationBo.findAll());
+            monitorView.updateStationList(station.SelectStations());
+            monitorView1.updateStationList(station.SelectStations());
             // Notification anzeigen
             Notification.Notifier.INSTANCE.notifySuccess("Info", "Variance is calculated");
             // View wieder in der Vordergrund, nachdem die Notification gezeigt wurde.
